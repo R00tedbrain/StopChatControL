@@ -1,8 +1,27 @@
 apply plugin: 'com.android.application'
 
+// Cargar propiedades del keystore
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     compileSdkVersion 35
     buildToolsVersion '33.0.0'
+    
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+    
     defaultConfig {
         applicationId "com.bwt.securechats"
         minSdkVersion 26
@@ -28,6 +47,9 @@ android {
             // Configuraciones para Android Studio
             shrinkResources false
             zipAlignEnabled true
+            
+            // Firma con keystore
+            signingConfig signingConfigs.release
             
             // Nombre del APK para Android Studio
             applicationIdSuffix ""
@@ -103,8 +125,7 @@ android {
 // Configuración específica para Android Studio
 android.applicationVariants.all { variant ->
     variant.outputs.all { output ->
-        def formattedDate = new Date().format('yyyyMMdd')
-        outputFileName = "SecureChatKeyboard-${variant.buildType.name}-${formattedDate}.apk"
+        outputFileName = "SecureChatKeyboard-v${variant.versionName}-${variant.buildType.name}.apk"
     }
 }
 

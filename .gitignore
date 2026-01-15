@@ -110,6 +110,7 @@ Thumbs.db
 *.jks
 *.keystore
 keystore.properties
+release_notes.md
 
 # APK output directory - except release APKs that are intentionally committed
 app/build/
