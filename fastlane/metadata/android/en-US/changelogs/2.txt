@@ -1,0 +1,8 @@
+• Post-Quantum Cryptography (Kyber) integration for quantum-resistant encryption
+• Enhanced key rotation every 2 days (vs 30 days original)
+• EncryptedSharedPreferences with AES256-GCM for secure storage
+• Per-contact history deletion functionality
+• 89+ language localizations
+• Updated to libsignal-android 0.73.2
+• Improved security architecture with hybrid ECC+Kyber encryption
+• Based on KryptEY by mellitopia and amnesica

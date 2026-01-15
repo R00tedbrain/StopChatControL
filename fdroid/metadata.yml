@@ -1,0 +1,96 @@
+Categories:
+  - Security
+  - Internet
+  - Writing
+License: GPL-3.0-only
+AuthorName: R00tedbrain
+AuthorEmail: rootedbraindevelopers@proton.me
+WebSite: https://github.com/R00tedbrain/StopChatControL
+SourceCode: https://github.com/R00tedbrain/StopChatControL
+IssueTracker: https://github.com/R00tedbrain/StopChatControL/issues
+Changelog: https://github.com/R00tedbrain/StopChatControL/blob/main/CHANGELOPQC.md
+
+AutoName: SecureChats Keyboard BWT
+Name: SecureChats Keyboard BWT
+
+RepoType: git
+Repo: https://github.com/R00tedbrain/StopChatControL.git
+
+Summary: Post-Quantum E2EE Keyboard for secure messaging
+
+Description: |-
+    Communicate securely and independent, regardless of the legal situation or whether messengers use E2EE. No server needed. #ChatKontrolleStoppen
+
+    <b>Why Securechat?</b>
+    Breaking of end-to-end encryption (E2EE) by laws such as the planned EU chat control is an ongoing issue. Content in messengers that use E2EE, such as Whatsapp or Signal, could thus be monitored by third parties. E2EE is often, but not always, standard in messengers. There are proven methods for E2EE such as PGP. However, these methods are sometimes cumbersomely integrated and require a lot of effort to use.
+
+    SecureChats Keyboard BWT is an Android keyboard that implements the Signal protocol with Post-Quantum Cryptography (Kyber). The keyboard works messenger-independently and both the X3DH Key Agreement Protocol and the Double Ratchet Algorithm work without a server, thus it enables a highly independent use of the protocol.
+
+    <b>Post-Quantum Features:</b>
+    * Kyber (PQC) integration for quantum-resistant encryption
+    * Hybrid encryption combining ECC and Kyber algorithms
+    * Enhanced key rotation every 2 days
+    * EncryptedSharedPreferences with AES256-GCM
+    * Per-contact history deletion
+
+    <b>Features</b>
+    Based upon Simple Keyboard ( https://github.com/rkkr/simple-keyboard ), SecureChats adds a view above the Keyboard for the E2EE functionality.
+
+    * use E2EE through Signal Protocol in any messenger
+    * encryption/decryption of messages
+    * enter message through separate text field in keyboard
+    * use clipboard to read messages
+    * manage contacts in own contact list in keyboard
+    * message log to view sent/received messages
+    * send messages as plain JSON (raw mode) or hidden in a decoy text (fairytale mode)
+    * verification of E2EE functionality via fingerprint
+    * Q&A View for questions
+    * dark & light theme
+    * 89+ language localizations
+
+    <b>Security</b>
+    The existing security properties for the Signal Protocol are also valid for the keyboard. Enhanced with post-quantum cryptography using Bouncy Castle's Kyber implementation.
+
+    <b>Limitations</b>
+    The keyboard was designed as a POC and only allows 1-to-1 conversations. However, the application can also be used in a group chat to a limited extent. Here, a message can be directed to a specific chat partner and not to all people. Other participants of the group chat cannot decrypt the message.
+
+    Text messages in Telegram are getting copied as HTML and not as plain text. When decoding the message with the fairytale mode the copied message is compromised and can't be read properly. Therefore, it can't be decoded at all. However, the raw mode works properly. When using SecureChats Keyboard with Telegram we recommend the raw mode.
+
+    Some messengers like Threema only allows up to 3500 bytes per message. Therefore, different character input limitations apply. To stay under the 3500 bytes limit, only 500 characters are allowed for raw and fairytale mode. For convenience these limitation applies for all messengers.
+
+    Based on KryptEY ( https://github.com/amnesica/KryptEY ) by mellitopia and amnesica.
+
+Builds:
+  - versionName: "2.0.0"
+    versionCode: 2
+    commit: v2.0.0
+    subdir: app
+    gradle:
+      - release
+    forceversion: true
+    forcevercode: true
+    ndk: 26.1.10909125
+    
+    sudo:
+      - echo "deb https://deb.debian.org/debian trixie main" > /etc/apt/sources.list.d/trixie.list
+      - apt-get update
+      - apt-get install -y -t trixie openjdk-17-jdk-headless
+      - update-alternatives --auto java
+      
+    prebuild:
+      - echo "Limpiando archivos innecesarios antes del build..."
+      - find . -name "*.dll" -delete
+      - find . -name "*.dylib" -delete
+      - find . -name "*.so.debug" -delete
+      - find . -name "*_debug.so" -delete
+      - find . -name "*_testing.so" -delete
+      - find . -name "*_unstripped.so" -delete
+      - echo "Archivos de debug eliminados"
+
+MaintainerNotes: |-
+    App uses Signal Protocol with Post-Quantum Cryptography (Kyber) for end-to-end encryption.
+    Requires NDK 26.1.10909125 for native library compilation.
+    Build process automatically excludes debug/testing libraries.
+
+CurrentVersion: 2.0.0
+CurrentVersionCode: 2
